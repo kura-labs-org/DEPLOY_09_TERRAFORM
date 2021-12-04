@@ -73,3 +73,12 @@ resource "aws_route_table" "routetable1" {
     "Name" = "RouteTable1"
   }
 }
+
+resource "aws_nat_gateway" "natg1" {
+  connectivity_type = "private"
+  subnet_id         = aws_subnet.private1.id
+
+    tags = {
+    Name = "Private NAT"
+  }
+}

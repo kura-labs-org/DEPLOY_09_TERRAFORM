@@ -67,3 +67,11 @@ One of the issues that I ran into was an internal security one that involves pas
 -var-file="secrets.tfvars"``` will be the command used here to pass the argument on for this part of the deployment.
 
 For the deployment itself, part 1 can be done using a standard approach, but part 2 and 3 need to reference one another, so parts of 2 need to be done with parts of 3 and vice versa. Last, Part 4 with the database, the default settings on Hashicorp need to be updated to consider for the postgres change.
+
+
+<h2>Instructions</h2>
+
+- vpc.tf wil be used to do part 1
+- ec2make.tf will be used for part 2
+- ALB.tf will be used for part 3
+- rds.tf will be used for part 4

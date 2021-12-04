@@ -1,0 +1,2 @@
+user = "kawang"
+pass = "testtest"

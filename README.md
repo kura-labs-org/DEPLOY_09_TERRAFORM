@@ -63,6 +63,8 @@ Be sure to include the following below in your pull request:
 
 This deployment challenge was done within a 5 hour span. The documentation used almost exclusively used Hashicorps documentation.
 
+In order to set up the subnet, I wanted to use all the cidrblock, so I used this [calculator](https://www.davidc.net/sites/default/subnets/subnets.html) to help me figure out on the fly the proper allocation.
+
 One of the issues that I ran into was an internal security one that involves passing a secret variable on to the CLI without passing that data on to git when pushing changes to code. This was solved using a [secrets.tfvars](https://learn.hashicorp.com/tutorials/terraform/sensitive-variables?in=terraform/0-14) that is called upon command, which will pass the secret to the variable, which then passes to the terraform file itself. ```terraform apply 
 -var-file="secrets.tfvars"``` will be the command used here to pass the argument on for this part of the deployment.
 

@@ -10,6 +10,7 @@ terraform {
 # Configure the AWS Provider
 provider "aws" {
   region = "us-east-1"
+  profile = "default"
   default_tags {
     tags = {
       Deployment = "DEPLOYMENT_09_TERRAFORM"

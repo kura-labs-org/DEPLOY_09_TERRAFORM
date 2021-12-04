@@ -1,10 +1,10 @@
-resource "aws_instance" "jenkins_ec2" {
+/* resource "aws_instance" "jenkins_ec2" {
   //This is the AMI for Ubuntu in US east 1
   ami           = "ami-083654bd07b5da81d"
   instance_type = "t2.micro"
 
   key_name        = "east1key.pem"
-  security_groups = ["${aws_security_group.jenkins_ec2.name}"]
+  security_groups = ["${aws_security_group.ubuntu_ec2.name}"]
 
   subnet_id = aws_subnet.public01.id
 
@@ -29,6 +29,7 @@ resource "aws_security_group" "ubuntu_ec2" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.alb-sg.id]
   }
 
   ingress {
@@ -44,4 +45,4 @@ resource "aws_security_group" "ubuntu_ec2" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-}
+} */

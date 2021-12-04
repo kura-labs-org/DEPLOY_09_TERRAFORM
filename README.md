@@ -57,3 +57,12 @@ Be sure to include the following below in your pull request:
 - [ ] DO NOT upload the `terraform.tfstate` file to the repo (it should be ignored by default)
 
 ![image](https://p2zk82o7hr3yb6ge7gzxx4ki-wpengine.netdna-ssl.com/wp-content/uploads/terraform-x-aws-1.png)
+
+
+<h2> Documentation </h2>
+
+This deployment challenge was done within a 5 hour span. The documentation used almost exclusively used Hashicorps documentation.
+
+One of the issues that I ran into was an internal security one that involves passing a secret variable on to the CLI without passing that data on to git when pushing changes to code. This was solved using a secrets.tfvars that is called upon command, which will pass the secret to the variable, which then passes to the terraform file itself.
+
+For the deployment itself, part 1 can be done using a standard approach, but part 2 and 3 need to reference one another, so parts of 2 need to be done with parts of 3 and vice versa. Last, Part 4 with the database, the default settings on Hashicorp need to be updated to consider for the postgres change.

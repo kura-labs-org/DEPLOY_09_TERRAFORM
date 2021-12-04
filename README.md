@@ -63,6 +63,7 @@ Be sure to include the following below in your pull request:
 
 This deployment challenge was done within a 5 hour span. The documentation used almost exclusively used Hashicorps documentation.
 
-One of the issues that I ran into was an internal security one that involves passing a secret variable on to the CLI without passing that data on to git when pushing changes to code. This was solved using a secrets.tfvars that is called upon command, which will pass the secret to the variable, which then passes to the terraform file itself.
+One of the issues that I ran into was an internal security one that involves passing a secret variable on to the CLI without passing that data on to git when pushing changes to code. This was solved using a secrets.tfvars that is called upon command, which will pass the secret to the variable, which then passes to the terraform file itself. ```terraform apply 
+-var-file="secrets.tfvars"``` will be the command used here to pass the argument on for this part of the deployment.
 
 For the deployment itself, part 1 can be done using a standard approach, but part 2 and 3 need to reference one another, so parts of 2 need to be done with parts of 3 and vice versa. Last, Part 4 with the database, the default settings on Hashicorp need to be updated to consider for the postgres change.

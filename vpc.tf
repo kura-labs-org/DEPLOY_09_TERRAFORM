@@ -37,6 +37,26 @@ resource "aws_subnet" "private01" {
   }
 }
 
+#### Internal Subnets
+resource "aws_subnet" "internal01" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.4.0/24"
+  availability_zone = "us-east-1a"
+  tags = {
+    Name = "Internal01"
+  }
+}
+
+resource "aws_subnet" "internal02" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.5.0/24"
+  availability_zone = "us-east-1b"
+  tags = {
+    Name = "Internal02"
+  }
+}
+
+
 ### Internet Gateway
 
 resource "aws_internet_gateway" "ig1" {

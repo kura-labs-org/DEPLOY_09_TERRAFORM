@@ -2,4 +2,4 @@
 *.tfstate
 terraform.tfstate.backup
 variables.tf
-secerts.tfvars
+secrets.tfvars

@@ -23,7 +23,7 @@ resource "aws_subnet" "public2" {
   cidr_block = "10.0.16.0/20"
   availability_zone = "us-east-1b"
   tags = {
-    Name = "Public1"
+    Name = "Public2"
   map_public_ip_on_launch = true
   }
 }
@@ -73,6 +73,13 @@ resource "aws_route_table" "routetable1" {
     "Name" = "RouteTable1"
   }
 }
+resource "aws_route_table" "routetable2" {
+  vpc_id = aws_vpc.main.id
+  route = []
+  tags = {
+    "Name" = "RouteTable2"
+  }
+}
 
 resource "aws_nat_gateway" "natg1" {
   connectivity_type = "private"
@@ -81,4 +88,20 @@ resource "aws_nat_gateway" "natg1" {
     tags = {
     Name = "Private NAT"
   }
+}
+
+resource "aws_route_table_association" "publicroute1" {
+  subnet_id      = aws_subnet.public1.id
+  route_table_id = aws_route_table.routetable1.id
+}
+
+
+resource "aws_route_table_association" "publicroute2" {
+  subnet_id      = aws_subnet.public2.id
+  route_table_id = aws_route_table.routetable1.id
+}
+
+resource "aws_route_table_association" "privateroute1" {
+  subnet_id      = aws_subnet.private1.id
+  route_table_id = aws_route_table.routetable2.id
 }

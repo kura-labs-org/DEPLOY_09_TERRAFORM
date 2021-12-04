@@ -1,2 +1,0 @@
-user = "kawang"
-pass = "testtest"

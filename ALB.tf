@@ -46,3 +46,16 @@ resource "aws_security_group" "ALBSG" {
     Name = "ALB GROUP"
   }
 }
+
+resource "aws_lb_target_group" "targetec1" {
+  name     = "TargetEC21"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.main.id
+}
+
+resource "aws_lb_target_group_attachment" "attachmentec1" {
+  target_group_arn = aws_lb_target_group.targetec1.arn
+  target_id        = aws_instance.ec2.id
+  port             = 80
+}

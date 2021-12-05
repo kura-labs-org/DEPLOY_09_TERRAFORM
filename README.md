@@ -79,3 +79,5 @@ For the deployment itself, part 1 can be done using a standard approach, but par
 - rds.tf will be used for part 4
 
 For the last file, it will be necessary to create a secrets.tfvars file with variables user and pass equal to something you desire the name to be. This will be used with a command to call this file so it can be passed through the variables file, and through the variables in rds.tf. Git ignore this file or you will expose your secret variables.
+
+Another thing to consider is when making the security group, the groups must be created first, then the rules regarding security group inbound and outbound must be established after. This is one of the cyclical errors that terraform will recognize and note immediately, so this MUST be commented out. One the groups are created, then they can be uncommented out and applied. This is a catch 22 to the creation as you cannot actually establish a rule about another security group if the group does not exist.

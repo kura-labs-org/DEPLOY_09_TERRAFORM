@@ -28,7 +28,7 @@ resource "aws_security_group" "ALBSG" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    description      = "TLS from VPC"
+    description      = "Allows all in from 80"
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
@@ -36,10 +36,10 @@ resource "aws_security_group" "ALBSG" {
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    security_groups  = [aws_security_group.allow_80.id]
   }
 
   tags = {

@@ -77,3 +77,5 @@ For the deployment itself, part 1 can be done using a standard approach, but par
 - ec2make.tf will be used for part 2
 - ALB.tf will be used for part 3
 - rds.tf will be used for part 4
+
+For the last file, it will be necessary to create a secrets.tfvars file with variables user and pass equal to something you desire the name to be. This will be used with a command to call this file so it can be passed through the variables file, and through the variables in rds.tf. Git ignore this file or you will expose your secret variables.

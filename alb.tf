@@ -6,7 +6,7 @@ resource "aws_lb" "pload" {
   security_groups    = [aws_security_group.lb_sg.id]
   subnets            = [aws_subnet.public01.id, aws_subnet.public02.id]
 
-  enable_deletion_protection = true
+  enable_deletion_protection = false
 
   tags = {
     Environment = "production"

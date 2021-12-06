@@ -107,22 +107,37 @@ resource "aws_security_group" "allow_tcp" {
 }
 
 module "ec2_instance" {
-  source  = "terraform-aws-modules/ec2-instance/aws"
-  version = "~> 3.0"
-
-  name = "single-instance"
-
+  source                 = "terraform-aws-modules/ec2-instance/aws"
+  version                = "~> 3.0"
+  name                   = "single-instance"
   ami                    = "ami-09e67e426f25ce0d7"
   instance_type          = "t2.micro"
   key_name               = "saikey"
   monitoring             = true
   vpc_security_group_ids = [aws_security_group.allow_tcp.id]
   subnet_id              = aws_subnet.Private01.id
-
   tags = {
+    Name        = "single-instance"
     Terraform   = "true"
     Environment = "dev"
   }
+}
+
+output "ec2_output" {
+  value = [module.ec2_instance.id]
+}
+
+resource "aws_lb_target_group" "Ec2-TG" {
+  name     = "Ec2-TG"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.main.id
+}
+
+resource "aws_lb_target_group_attachment" "attach" {
+  target_group_arn = aws_lb_target_group.Ec2-TG.arn
+  target_id        = output.ec2_output[0]
+  port             = 80
 }
 
 resource "aws_security_group" "lb_SG" {
@@ -141,8 +156,8 @@ resource "aws_security_group" "lb_SG" {
   egress {
     from_port   = 80
     to_port     = 80
-    protocol    = "-1"
-    cidr_blocks = [aws_security_group.allow_tcp.id]
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -152,12 +167,11 @@ resource "aws_security_group" "lb_SG" {
 
 
 resource "aws_lb" "deploy9_lb" {
-  name               = "deploy9_lb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = aws_subnet.public.*.id
-
+  name                       = "deploy9-lb"
+  internal                   = false
+  load_balancer_type         = "application"
+  security_groups            = [aws_security_group.lb_SG.id]
+  subnets                    = [aws_subnet.public01.id, aws_subnet.public02.id]
   enable_deletion_protection = true
 
   tags = {

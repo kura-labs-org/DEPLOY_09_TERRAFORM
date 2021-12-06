@@ -123,10 +123,6 @@ module "ec2_instance" {
   }
 }
 
-output "ec2_output" {
-  value = [module.ec2_instance.id]
-}
-
 resource "aws_lb_target_group" "Ec2-TG" {
   name     = "Ec2-TG"
   port     = 80
@@ -136,7 +132,7 @@ resource "aws_lb_target_group" "Ec2-TG" {
 
 resource "aws_lb_target_group_attachment" "attach" {
   target_group_arn = aws_lb_target_group.Ec2-TG.arn
-  target_id        = output.ec2_output[0]
+  target_id        = module.ec2_instance.id
   port             = 80
 }
 

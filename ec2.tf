@@ -31,7 +31,7 @@ module "ec2_instance" {
   instance_type          = "t2.micro"
   key_name               = "saikey"
   monitoring             = true
-  vpc_security_group_ids = [aws_security_group.allow_tcp.id]
+  vpc_security_group_ids = [aws_security_group.lb_SG.id]
   subnet_id              = aws_subnet.Private01.id
   tags = {
     Name        = "single-instance"

@@ -69,6 +69,11 @@ resource "aws_internet_gateway" "ig1" {
   }
 }
 
+resource "aws_nat_gateway" "example" {
+  connectivity_type = "private"
+  subnet_id         = aws_subnet.Private01.id
+}
+
 resource "aws_route_table" "project1-route-table" {
   vpc_id = aws_vpc.main.id
   route {
@@ -78,6 +83,17 @@ resource "aws_route_table" "project1-route-table" {
 
   tags = {
     "Name" = "project1-route-table"
+  }
+}
+
+resource "aws_route_table" "Private-route-table" {
+  vpc_id = aws_vpc.main.id
+  route {
+    cidr_block = "0.0.0.0/0"
+  }
+
+  tags = {
+    "Name" = "Private-route-table"
   }
 }
 
@@ -188,38 +204,38 @@ resource "aws_security_group" "db_SG" {
   }
 }
 
-  module "db" {
-    source  = "terraform-aws-modules/rds/aws"
-    version = "~> 3.0"
+module "db" {
+  source  = "terraform-aws-modules/rds/aws"
+  version = "~> 3.0"
 
-    identifier = "saidb"
+  identifier = "saidb"
 
-    engine            = "mysql"
-    instance_class    = "db.t2.large"
-    allocated_storage = 5
+  engine            = "mysql"
+  instance_class    = "db.t2.large"
+  allocated_storage = 5
 
-    name     = "example_db"
-    username = "user"
-    password = "YourPwdShouldBeLongAndSecure!"
-    port     = "3306"
-    multi_az = true
-    iam_database_authentication_enabled = true
+  name                                = "example_db"
+  username                            = "user"
+  password                            = "YourPwdShouldBeLongAndSecure!"
+  port                                = "3306"
+  multi_az                            = true
+  iam_database_authentication_enabled = true
 
-    vpc_security_group_ids = [aws_security_group.db_SG.id]
+  vpc_security_group_ids = [aws_security_group.db_SG.id]
 
-    maintenance_window = "Mon:00:00-Mon:03:00"
-    backup_window      = "03:00-06:00"
+  maintenance_window = "Mon:00:00-Mon:03:00"
+  backup_window      = "03:00-06:00"
 
-    tags = {
-      Owner       = "user"
-      Environment = "dev"
-    }
-
-    # DB subnet group
-    subnet_ids = [aws_subnet.internal01.id, aws_subnet.internal02.id]
-
-    # Database Deletion Protection
-    deletion_protection = false
+  tags = {
+    Owner       = "user"
+    Environment = "dev"
   }
+
+  # DB subnet group
+  subnet_ids = [aws_subnet.internal01.id, aws_subnet.internal02.id]
+
+  # Database Deletion Protection
+  deletion_protection = false
+}
 
 

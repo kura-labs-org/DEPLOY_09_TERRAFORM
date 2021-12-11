@@ -43,7 +43,7 @@ The `.tf` files contain the code to spin up a complete VPC and its component inf
 ![db](screenshots/db.png)
 
 ## Requirements
-- [ ] Add all Terraform files to the pull request.
+- [ x ] Add all Terraform files to the pull request.
 - [ ] Document the process, issues and anything you decided to do differently.
 - [ ] Screenshot samples of your infrastucture from AWS and include in your PR.
 - [ ] DO NOT upload the `terraform.tfstate` file to the repo (it should be ignored by default)

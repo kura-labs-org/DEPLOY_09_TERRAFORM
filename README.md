@@ -1,12 +1,7 @@
-# DEPLOY_09_TERRAFORM
+<h1 align=center>Deployment 9: Terraform Challenge</h1>
 
-<h1 align=center>Deployment 9</h1>
+## Goal: 
 
-## Goal:
-
-Welcome to Deployment 9. For this deployment you will need to follow the directions below to generate Terraform code to deploy the following resources:
-
-## Terraform Challenge
 Create the following resources in AWS using the latest Terraform version (do not use external modules):
 
 ## Architecture:

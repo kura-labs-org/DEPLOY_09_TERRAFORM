@@ -1,54 +1,46 @@
-# DEPLOY_09_TERRAFORM
+# Deply 9
 
-<h1 align=center>Deployment 9</h1>
+<h1 align=center>Using Terraform</h1>
 
-Welcome to Deployment 9. For this deployment you will need to follow the directions below to generate Terraform code to deploy the following resources:
-
-## Terraform Challenge
-Create the following resources in AWS using the latest Terraform version (do not use external modules):
-
-## Part 1 - VPC
-1. Create a new VPC with:
-  * 5 subnets (2 public, 1 private, 2 internal)
-  * 2 route tables (public & private)
-  * an Internet Gateway
-  * and 1 NAT Gateway (in 1 of the private subnets)
-
-2. Subnets are defined as:
- * Public - route to Internet Gateway (for any ipv4 address)
- * Private - route to NAT Gateway (for any ipv4 address)
- * Internal - do not associate any route table in Terraform (main/default route table will be associated by default which only has a route to the local/private network)
-
-**Note**: You can decide which network range to use.
-
-## Part 2 - EC2
-1. Create 1 EC2 instance in the private subnet with:
-  * An Ubuntu AMI (version of your choosing)
-  * Instance type/size, tags, and other settings of your choosing
-2. Create a security group for the EC2 with the following rules:
-  * Ingress: allow port 80 traffic from the ALB security group
-  * Egress: allow all outbound traffic to any ipv4 address
-
-## Part 3 - Application Load Balancer (ALB)
-1. Create 1 ALB in the 2 public subnets
-2. Create a security group for the ALB with the following rules:
-  * Ingress: allows only port 80 inbound traffic from any ipv4 address
-  * Egress: allow only port 80 outbound traffic to the EC2 security group
-3. Create a target group and add the EC2 instance to the group
-4. Create an ALB listener that forwards traffic to the target group
-
-**Note**: for this exercise the ALB is not accepting HTTPS traffic, only HTTP
-
-## Part 4 - RDS
-1. Create 1 PostgreSQL RDS instance
-  * Make it multi-az
-  * Name, instance type/size, tags, db username/password, and other settings of your choosing
-2. Create a security group for the RDS with the following rule:
-  * Ingress: allow traffic to its port from the EC2 security group
-3. Create a DB subnet group for the RDS consisting of the 2 internal subnets
+### Objectives
+Provision cloud infrastructure to build a fully functional VPC.
 
 
-Be sure to include the following below in your pull request: 
+This deployment was very striaght forward and invovled a lot of looking up each component in the Terraform documentation and understanding the different arguments/attributes. I began by building the VPC and subnets.
+
+### VPC
+
+The important details here was the cidr blocking and making sure the subnets could exist within the vpc's domain. The internal subnets weren't associated with any route tables. The nat gateway was placed into the public subnet. There were little to no issues with this part of the assignment.
+
+### Security Groups
+
+We needed to create three security groups. One for the ALB, one for the EC2, and one for the DB. The ALBsg will allow for outbound traffic to the EC2sg, and the EC2sg will allow for inbound from the ALBsg. When first making these sg's I ran into a `Cycle Error`. The reason for this is that the ALBsg's egress rule referenced the EC2sg, while the EC2sg's ingress rule referenced the ALBsg, creating a unresolvable loops of sorts. One sg couldnt be created without the other existing already.
+
+The workaround here is to create the ALBsg without the egress rule, and then add the egress rule referencing EC2sg with `aws_security_group_rule`.
+
+### Instances
+
+We need to make sure the EC2 is in the private subnet, and that we attach the EC2sg.
+
+The ALB needs to be mapped to both public subnets. Make sure the target groups and listeners are pointing in the right directions.
+
+The DB was more challenging to build. From multi-az, to the engine version, to the subnet group that needs to be created, getting it all right included many terraform apply's.
+
+### Conclusion
+
+The `.tf` files contain the code to spin up a complete VPC and its component infrastructure. Here are some screenshots of the infrastructure in the console.
+
+**VPC**
+![vpc](screenshots/VPC.png)
+
+**Subnets**
+![subnets](screenshots/subnets.png)
+
+**EC2**
+![ec2](screenshots/EC2.png)
+
+**Database**
+![db](screenshots/db.png)
 
 ## Requirements
 - [ ] Add all Terraform files to the pull request.

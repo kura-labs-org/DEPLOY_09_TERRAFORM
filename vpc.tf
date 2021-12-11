@@ -250,7 +250,7 @@ resource "aws_lb" "ALB" {
 resource "aws_lb_target_group" "d9-tg" {
   name     = "deploy9-target-group"
   port     = 80
-  protocol = "HTTP"
+  protocol = "tcp"
   vpc_id   = aws_vpc.main.id
 }
 

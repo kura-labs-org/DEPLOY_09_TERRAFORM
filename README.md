@@ -1,5 +1,7 @@
 <h1 align=center>Deployment 9: Terraform Challenge</h1>
 
+**Note**: for this documentation, I updated the [README.md](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/master/README.md) file from the master branch of this repository.
+
 ## Goal: 
 
 Create the following resources in AWS using the latest Terraform version (do not use external modules):

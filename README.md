@@ -13,13 +13,13 @@ Create the following resources in AWS using the latest Terraform version (do not
 
 ## Software Tools:
 
-   * **AWS account**: set up
+   * **AWS account**: set up an [account](https://docs.aws.amazon.com/polly/latest/dg/setting-up.html) and a user.
    * **Terraform**: here is a [link](https://learn.hashicorp.com/tutorials/terraform/install-cli) to the resource used to install Terraform.
 
 ## Procedure:
 
 ### Part 1 - VPC
-1. Create a new VPC with:
+1. Create a new VPC with: you can use these terraform files: [vpc.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/vpc.tf), [subnet.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/subnet.tf), [gateways.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/gateways.tf), and [provider.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/provider.tf).
   * 5 subnets (2 public, 1 private, 2 internal)
   * 2 route tables (public & private)
   * an Internet Gateway
@@ -33,6 +33,8 @@ Create the following resources in AWS using the latest Terraform version (do not
 **Note**: You can decide which network range to use.
 
 ### Part 2 - EC2
+
+You can use the [ec2.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/ec2.tf) terraform file.
 1. Create 1 EC2 instance in the private subnet with:
   * An Ubuntu AMI (version of your choosing)
   * Instance type/size, tags, and other settings of your choosing
@@ -41,6 +43,9 @@ Create the following resources in AWS using the latest Terraform version (do not
   * Egress: allow all outbound traffic to any ipv4 address
 
 ### Part 3 - Application Load Balancer (ALB)
+
+You can use this [ALB.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/ALB.tf) terraform file.
+
 1. Create 1 ALB in the 2 public subnets
 2. Create a security group for the ALB with the following rules:
   * Ingress: allows only port 80 inbound traffic from any ipv4 address
@@ -51,6 +56,9 @@ Create the following resources in AWS using the latest Terraform version (do not
 **Note**: for this exercise the ALB is not accepting HTTPS traffic, only HTTP
 
 ### Part 4 - RDS
+
+You can use this [RDS.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/RDS.tf) terraform file.
+
 1. Create 1 PostgreSQL RDS instance
   * Make it multi-az
   * Name, instance type/size, tags, db username/password, and other settings of your choosing
@@ -58,8 +66,44 @@ Create the following resources in AWS using the latest Terraform version (do not
   * Ingress: allow traffic to its port from the EC2 security group
 3. Create a DB subnet group for the RDS consisting of the 2 internal subnets
 
+## The steps:
 
+1. Have all the terraform files we mentioned above in one directory
+2. `cd` into that repository.
+3. Make sure Terraform is installed by running the command `terraform -v`. Install terraform if you do not have it installed.
+4. Set up the aws cli so that Terraform can communicate to **aws**.
+5. Now, run the command `terraform init`.
 
+![](images/d9-1.PNG)
+
+6. Then, run the command `terraform plan`.
+
+![](images/d9-2.PNG)
+![](images/d9-3.PNG)
+
+Then enter `yes`
+
+![](images/d9-5.PNG)
+
+You will see this when the creation is complete:
+
+![](images/d9-11.PNG)
+
+7. Once the creation of the infrastructure is done, you can visit the AWS console to verify.
+
+![](images/d9-6.PNG)
+
+![](images/d9-7.PNG)
+
+![](images/d9-8.PNG)
+
+![](images/d9-9.PNG)
+
+![](images/d9-10.PNG)
+
+8. **Clean up** by running the command `terraform destroy`. **THIS IS TO AVOID HAVING A AWS BILL!**
+
+![](images/d9-13.PNG)
 
 ## Sources Visited:
 1. https://harshitdawar.medium.com/launching-a-vpc-with-public-private-subnet-nat-gateway-in-aws-using-terraform-99950c671ce9

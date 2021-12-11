@@ -2,58 +2,38 @@
 
 <h1 align=center>Deployment 9</h1>
 
-Welcome to Deployment 9. For this deployment you will need to follow the directions below to generate Terraform code to deploy the following resources:
+## Purpose 
 
-## Terraform Challenge
-Create the following resources in AWS using the latest Terraform version (do not use external modules):
+The purpose of this deployment/repo was to create a VPC consiting of an EC2, RDS postgres database, and an application load balancer. 
+The flow of data would be user -> internet -> loadbalancer -> EC2 -> RDS database. 
 
-## Part 1 - VPC
-1. Create a new VPC with:
-  * 5 subnets (2 public, 1 private, 2 internal)
-  * 2 route tables (public & private)
-  * an Internet Gateway
-  * and 1 NAT Gateway (in 1 of the private subnets)
+## Though Process
 
-2. Subnets are defined as:
- * Public - route to Internet Gateway (for any ipv4 address)
- * Private - route to NAT Gateway (for any ipv4 address)
- * Internal - do not associate any route table in Terraform (main/default route table will be associated by default which only has a route to the local/private network)
+I structured the project into files designinating the resoruces they affect. Such as the vpc.tf file pertaining to the VPC and it's underlying features, and ec2.tf featuring the security groups and ec2 isntance.
 
-**Note**: You can decide which network range to use.
+### Creating the VPC
 
-## Part 2 - EC2
-1. Create 1 EC2 instance in the private subnet with:
-  * An Ubuntu AMI (version of your choosing)
-  * Instance type/size, tags, and other settings of your choosing
-2. Create a security group for the EC2 with the following rules:
-  * Ingress: allow port 80 traffic from the ALB security group
-  * Egress: allow all outbound traffic to any ipv4 address
+Utilized the terraform resource block "aws_vpc" to create a vpc named "Main VPC" with a cidr block of 10.0.0.0/18. 
 
-## Part 3 - Application Load Balancer (ALB)
-1. Create 1 ALB in the 2 public subnets
-2. Create a security group for the ALB with the following rules:
-  * Ingress: allows only port 80 inbound traffic from any ipv4 address
-  * Egress: allow only port 80 outbound traffic to the EC2 security group
-3. Create a target group and add the EC2 instance to the group
-4. Create an ALB listener that forwards traffic to the target group
+I then created all the subnets required utilizing a variation of following code block. Changing the availability_zone tag for when I need a subnet in a different AZ as well as changing the cidr block since subnets can't share the same cidr block. 
+```
+resource "aws_subnet" "public01" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "us-east-1a"
+  tags = {
+    Name = "Public01"
+  }
+}
+```
 
-**Note**: for this exercise the ALB is not accepting HTTPS traffic, only HTTP
+Next I created an internet gateway in order to allow the VPC to access the internet. 
 
-## Part 4 - RDS
-1. Create 1 PostgreSQL RDS instance
-  * Make it multi-az
-  * Name, instance type/size, tags, db username/password, and other settings of your choosing
-2. Create a security group for the RDS with the following rule:
-  * Ingress: allow traffic to its port from the EC2 security group
-3. Create a DB subnet group for the RDS consisting of the 2 internal subnets
+Then added a nat gateway resource so the private subnets would be able to access services outside the VPC. 
+
+Lastly configured a route table and the appropriate routes for the subnets to configure network traffic. 
 
 
-Be sure to include the following below in your pull request: 
+### Creating the EC2
 
-## Requirements
-- [ ] Add all Terraform files to the pull request.
-- [ ] Document the process, issues and anything you decided to do differently.
-- [ ] Screenshot samples of your infrastucture from AWS and include in your PR.
-- [ ] DO NOT upload the `terraform.tfstate` file to the repo (it should be ignored by default)
-
-![image](https://p2zk82o7hr3yb6ge7gzxx4ki-wpengine.netdna-ssl.com/wp-content/uploads/terraform-x-aws-1.png)
+Created an EC2 using the terraform aws_instance resource block. Looked up the ami for an Ubuntu image in us east 1, and configured the instance to be a t2.micro (to keep it in the free tier). Lastly placed it in the private subnet that was creating in the vpc.tf file.

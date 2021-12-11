@@ -5,7 +5,7 @@ resource "aws_subnet" "public01" {
   availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
   tags = {
-    "Name" = "Public-sub1"
+    "Name" = "Public01"
   }
 }
 
@@ -16,7 +16,7 @@ resource "aws_subnet" "public02" {
   map_public_ip_on_launch = true
 
   tags = {
-    "Name" = "Public-sub2"
+    "Name" = "Public02"
   }
 }
 
@@ -26,17 +26,17 @@ resource "aws_subnet" "private01" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.3.0/24"
   availability_zone       = "us-east-1a"
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = false
 
   tags = {
-    "Name" = "Private-sub-Isolated"
+    "Name" = "Private01-Isolated"
   }
 }
 
 # 2 Internal subnets: internal01 and internal02
 resource "aws_subnet" "internal01" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.4.0/24"
+  cidr_block              = "10.0.5.0/24"
   availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
 
@@ -48,7 +48,7 @@ resource "aws_subnet" "internal01" {
 # 1 Private subnet: Private01
 resource "aws_subnet" "internal02" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.5.0/24"
+  cidr_block              = "10.0.6.0/24"
   availability_zone       = "us-east-1b"
   map_public_ip_on_launch = true
 

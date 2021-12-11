@@ -2,12 +2,23 @@
 
 <h1 align=center>Deployment 9</h1>
 
+## Goal:
+
 Welcome to Deployment 9. For this deployment you will need to follow the directions below to generate Terraform code to deploy the following resources:
 
 ## Terraform Challenge
 Create the following resources in AWS using the latest Terraform version (do not use external modules):
 
-## Part 1 - VPC
+## Architecture:
+
+## Software Tools:
+
+   * **AWS account**: set up
+   * **Terraform**: here is a [link](https://learn.hashicorp.com/tutorials/terraform/install-cli) to the resource used to install Terraform.
+
+## Procedure:
+
+### Part 1 - VPC
 1. Create a new VPC with:
   * 5 subnets (2 public, 1 private, 2 internal)
   * 2 route tables (public & private)
@@ -21,7 +32,7 @@ Create the following resources in AWS using the latest Terraform version (do not
 
 **Note**: You can decide which network range to use.
 
-## Part 2 - EC2
+### Part 2 - EC2
 1. Create 1 EC2 instance in the private subnet with:
   * An Ubuntu AMI (version of your choosing)
   * Instance type/size, tags, and other settings of your choosing
@@ -29,7 +40,7 @@ Create the following resources in AWS using the latest Terraform version (do not
   * Ingress: allow port 80 traffic from the ALB security group
   * Egress: allow all outbound traffic to any ipv4 address
 
-## Part 3 - Application Load Balancer (ALB)
+### Part 3 - Application Load Balancer (ALB)
 1. Create 1 ALB in the 2 public subnets
 2. Create a security group for the ALB with the following rules:
   * Ingress: allows only port 80 inbound traffic from any ipv4 address
@@ -39,7 +50,7 @@ Create the following resources in AWS using the latest Terraform version (do not
 
 **Note**: for this exercise the ALB is not accepting HTTPS traffic, only HTTP
 
-## Part 4 - RDS
+### Part 4 - RDS
 1. Create 1 PostgreSQL RDS instance
   * Make it multi-az
   * Name, instance type/size, tags, db username/password, and other settings of your choosing
@@ -48,12 +59,14 @@ Create the following resources in AWS using the latest Terraform version (do not
 3. Create a DB subnet group for the RDS consisting of the 2 internal subnets
 
 
-Be sure to include the following below in your pull request: 
 
-## Requirements
-- [ ] Add all Terraform files to the pull request.
-- [ ] Document the process, issues and anything you decided to do differently.
-- [ ] Screenshot samples of your infrastucture from AWS and include in your PR.
-- [ ] DO NOT upload the `terraform.tfstate` file to the repo (it should be ignored by default)
+
+## Sources Visited:
+1. https://harshitdawar.medium.com/launching-a-vpc-with-public-private-subnet-nat-gateway-in-aws-using-terraform-99950c671ce9
+2. https://www.cdw.com/content/cdw/en/articles/cloud/aws-vpc-terraform.html
+3. https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+4. https://hiveit.co.uk/techshop/terraform-aws-vpc-example/03-create-an-rds-db-instance/
+5. https://www.bogotobogo.com/DevOps/Terraform/Terraform-VPC-Subnet-ELB-RouteTable-SecurityGroup-Apache-Server-2.php
+  
 
 ![image](https://p2zk82o7hr3yb6ge7gzxx4ki-wpengine.netdna-ssl.com/wp-content/uploads/terraform-x-aws-1.png)

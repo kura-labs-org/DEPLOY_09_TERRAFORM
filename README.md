@@ -71,8 +71,13 @@ You can use this [RDS.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/bl
 1. Have all the terraform files we mentioned above in one directory
 2. `cd` into that repository.
 3. Make sure Terraform is installed by running the command `terraform -v`. Install terraform if you do not have it installed.
-4. Set up the aws cli so that Terraform can communicate to **aws**.
-5. Now, run the command `terraform init`.
+4. Set up the [aws cli](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html) so that Terraform can communicate to **AWS**.
+    * In order to set up the aws **credentials**, have the **access key** and **secret access key** ready. Create a **key pair** on AWS if you don't have any.
+    * Run the command `aws configure`, then fill out the credentials.
+
+![](images/d9-14.PNG)
+
+7. Now, run the command `terraform init`.
 
 ![](images/d9-1.PNG)
 

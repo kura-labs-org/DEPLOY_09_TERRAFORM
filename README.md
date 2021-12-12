@@ -8,6 +8,8 @@ Create the following resources in AWS using the latest Terraform version (do not
 
 ## Architecture:
 
+![](images/d9-15.PNG)
+
 ## Software Tools:
 
    * **AWS account**: set up an [account](https://docs.aws.amazon.com/polly/latest/dg/setting-up.html) and a user.
@@ -15,7 +17,9 @@ Create the following resources in AWS using the latest Terraform version (do not
 
 ## Procedure:
 
-### Part 1 - VPC
+### Requirements:
+
+#### Part 1 - VPC
 1. Create a new VPC with: you can use these terraform files: [vpc.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/vpc.tf), [subnet.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/subnet.tf), [gateways.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/gateways.tf), and [provider.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/provider.tf).
   * 5 subnets (2 public, 1 private, 2 internal)
   * 2 route tables (public & private)
@@ -29,7 +33,7 @@ Create the following resources in AWS using the latest Terraform version (do not
 
 **Note**: You can decide which network range to use.
 
-### Part 2 - EC2
+#### Part 2 - EC2
 
 You can use the [ec2.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/ec2.tf) terraform file.
 1. Create 1 EC2 instance in the private subnet with:
@@ -39,7 +43,7 @@ You can use the [ec2.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blo
   * Ingress: allow port 80 traffic from the ALB security group
   * Egress: allow all outbound traffic to any ipv4 address
 
-### Part 3 - Application Load Balancer (ALB)
+#### Part 3 - Application Load Balancer (ALB)
 
 You can use this [ALB.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/ALB.tf) terraform file.
 
@@ -52,7 +56,7 @@ You can use this [ALB.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/bl
 
 **Note**: for this exercise the ALB is not accepting HTTPS traffic, only HTTP
 
-### Part 4 - RDS
+#### Part 4 - RDS
 
 You can use this [RDS.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/blob/NAME/DEPLOYMENT9/RDS.tf) terraform file.
 
@@ -63,7 +67,7 @@ You can use this [RDS.tf](https://github.com/ibrahima1289/DEPLOY_09_TERRAFORM/bl
   * Ingress: allow traffic to its port from the EC2 security group
 3. Create a DB subnet group for the RDS consisting of the 2 internal subnets
 
-## The steps:
+### The steps:
 
 1. Have all the terraform files we mentioned above in one directory
 2. `cd` into that repository.

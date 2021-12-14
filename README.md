@@ -1,15 +1,14 @@
-# DEPLOY_09_TERRAFORM
 
-<h1 align=center>Deployment 9</h1>
+<h1 align=center>VPC Deployment through Terraform</h1>
 
 ## Purpose 
 
-The purpose of this deployment/repo was to create a VPC consiting of an EC2, RDS postgres database, and an application load balancer. 
-The flow of data would be user -> internet -> loadbalancer -> EC2 -> RDS database. 
+The purpose of this deployment/repo was to create a VPC consisting of an EC2, RDS postgres database, and an application load balancer. 
+The flow of data would be user -> internet -> load-balancer -> EC2 -> RDS database. 
 
 ## Thought Process
 
-I structured the project into files designinating the resoruces they affect. Such as the vpc.tf file pertaining to the VPC and it's underlying features, and ec2.tf featuring the security groups and ec2 isntance.
+I structured the project into files and designated the resources they affect. Such as the vpc.tf file pertaining to the VPC and it's underlying features, and ec2.tf featuring the security groups and ec2 instance.
 
 ### Creating the VPC
 
@@ -79,4 +78,4 @@ After defining the LB I created the target group which consisted of the EC2 crea
 
 ### Creating the database
 
-Created the database using the aws_db_instance resource from Terraform, by doing this I was able to configure the database to be multi-az, have a custom username and password, and set the instance class. I also created a db subnet group consisting of the two interal subnets created in te vpc.tf file. 
+Created the database using the aws_db_instance resource from Terraform, by doing this I was able to configure the database to be multi-az, have a custom username and password, and set the instance class. I also created a db subnet group consisting of the two internal subnets created in te vpc.tf file. 

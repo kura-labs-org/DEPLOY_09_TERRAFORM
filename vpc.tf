@@ -7,3 +7,11 @@ resource "aws_vpc" "main" {
     Name = "Main VPC"
   }
 }
+
+resource "aws_internet_gateway" "ig1" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "ig1"
+  }
+}

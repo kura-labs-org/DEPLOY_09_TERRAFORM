@@ -5,10 +5,10 @@ resource "aws_db_instance" "database" {
   username       = "admin"
   password       = "abc123abc"
 
-  allocated_storage   = 10
-  engine              = "mysql"
-  engine_version      = "5.7"
-  skip_final_snapshot = true
+  allocated_storage      = 10
+  engine                 = "mysql"
+  engine_version         = "5.7"
+  skip_final_snapshot    = true
   vpc_security_group_ids = [aws_security_group.database_sg.id]
   db_subnet_group_name   = aws_db_subnet_group.database_subnet_group.id
   tags = {

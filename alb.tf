@@ -17,7 +17,8 @@ resource "aws_security_group" "load_balancer_sg" {
     protocol    = "tcp"
     from_port   = 80
     to_port     = 80
-    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id        = aws_security_group.load_balancer_sg.id
+    source_security_group_id = aws_security_group.ec2.id
   }
 
   tags = {

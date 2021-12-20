@@ -97,7 +97,7 @@ resource "aws_route_table" "routetable_private" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw.id
+    nat_gateway_id = aws_nat_gateway.nat-gateway.id
   }
 
   tags = {
@@ -114,8 +114,15 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
+# Elastic IP for Nat Gateway
+resource "aws_eip" "nat_elastic_ip" {
+  vpc = true
+}
+
 #Create NAT Gateway
 resource "aws_nat_gateway" "nat_private" {
-  connectivity_type = "private"
+  allocation_id = aws_eip.nat_elastic_ip.id
   subnet_id         = aws_subnet.private01.id
 }
+
+

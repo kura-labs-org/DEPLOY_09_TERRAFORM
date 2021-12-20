@@ -122,7 +122,7 @@ resource "aws_eip" "nat_elastic_ip" {
 #Create NAT Gateway
 resource "aws_nat_gateway" "nat_private" {
   allocation_id = aws_eip.nat_elastic_ip.id
-  subnet_id         = aws_subnet.private01.id
+  subnet_id         = aws_subnet.public01.id
 }
 
 

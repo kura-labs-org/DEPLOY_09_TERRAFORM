@@ -118,5 +118,4 @@ You will see this when the creation is complete:
 4. https://hiveit.co.uk/techshop/terraform-aws-vpc-example/03-create-an-rds-db-instance/
 5. https://www.bogotobogo.com/DevOps/Terraform/Terraform-VPC-Subnet-ELB-RouteTable-SecurityGroup-Apache-Server-2.php
   
-
 ![image](https://p2zk82o7hr3yb6ge7gzxx4ki-wpengine.netdna-ssl.com/wp-content/uploads/terraform-x-aws-1.png)
